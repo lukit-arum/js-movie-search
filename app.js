@@ -28,7 +28,26 @@ fetch('http://www.omdbapi.com/?apikey=ac003c55&s=harry potter')
             
             fetch('http://www.omdbapi.com/?apikey=ac003c55&i=' + imdbid)
              .then(response => response.json())
-             .then(detail => console.log(detail))
+             .then(detail => {
+                const modalBody = document.querySelector('.modal-body')
+                modalBody.innerHTML = `<div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            <img src="${detail.Poster}" class="img-fluid">
+                                            </div>
+
+                                            <div class="col-md">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">judul</li>
+                                                <li class="list-group-item">tahun</li>
+                                                <li class="list-group-item">sutradara</li>
+                                                <li class="list-group-item">penulis</li>
+                                                <li class="list-group-item">sinopsis Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolor praesentium esse assumenda numquam voluptates atque cumque ullam doloremque quisquam, nesciunt quos eaque? Quas illum repellat soluta. Ipsa, est qui?</li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                    </div>`
+             })
 
         })
     })
