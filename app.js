@@ -38,9 +38,46 @@ function showMovies(movie) {
             </div>`
 }
 
+//detail button dengan event binding
+document.addEventListener('click', async function(e) {
+    if(e.target.classList.contains('modal-detail-button')) {
+        const imdbid = e.target.dataset.imdbid
+        const movieDetail = await getMovieDetail(imdbid)
+        updatUiDetail(movieDetail)
+    }
+})
 
+function getMovieDetail(imdbid) {
+    return fetch('http://www.omdbapi.com/?apikey=ac003c55&i=' + imdbid)
+     .then(response => response.json())
+     .then(response => response)
+}
 
+function updatUiDetail(movieDetail) {
+    const detail = showMovieDetail(movieDetail)
+    const modalBody = document.querySelector('.modal-body')
+    modalBody.innerHTML = detail
+}
 
+function showMovieDetail(movieDetail) {
+    return `<div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                    <img src="${movieDetail.Poster}" class="img-fluid">
+                    </div>
+
+                    <div class="col-md">
+                    <ul class="list-group">
+                        <li class="list-group-item">judul</li>
+                        <li class="list-group-item">tahun</li>
+                        <li class="list-group-item">sutradara</li>
+                        <li class="list-group-item">penulis</li>
+                        <li class="list-group-item">sinopsis Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolor praesentium esse assumenda numquam voluptates atque cumque ullam doloremque quisquam, nesciunt quos eaque? Quas illum repellat soluta. Ipsa, est qui?</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>`
+}
 // melakukan fetch 
 // fetch('http://www.omdbapi.com/?apikey=ac003c55&s=harry potter')
 //  .then(response => response.json())
@@ -73,23 +110,23 @@ function showMovies(movie) {
 //              .then(response => response.json())
 //              .then(detail => {
 //                 const modalBody = document.querySelector('.modal-body')
-//                 modalBody.innerHTML = `<div class="container-fluid">
-//                                         <div class="row">
-//                                             <div class="col-md-3">
-//                                             <img src="${detail.Poster}" class="img-fluid">
-//                                             </div>
+                // modalBody.innerHTML = `<div class="container-fluid">
+                //                         <div class="row">
+                //                             <div class="col-md-3">
+                //                             <img src="${detail.Poster}" class="img-fluid">
+                //                             </div>
 
-//                                             <div class="col-md">
-//                                             <ul class="list-group">
-//                                                 <li class="list-group-item">judul</li>
-//                                                 <li class="list-group-item">tahun</li>
-//                                                 <li class="list-group-item">sutradara</li>
-//                                                 <li class="list-group-item">penulis</li>
-//                                                 <li class="list-group-item">sinopsis Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolor praesentium esse assumenda numquam voluptates atque cumque ullam doloremque quisquam, nesciunt quos eaque? Quas illum repellat soluta. Ipsa, est qui?</li>
-//                                             </ul>
-//                                             </div>
-//                                         </div>
-//                                     </div>`
+                //                             <div class="col-md">
+                //                             <ul class="list-group">
+                //                                 <li class="list-group-item">judul</li>
+                //                                 <li class="list-group-item">tahun</li>
+                //                                 <li class="list-group-item">sutradara</li>
+                //                                 <li class="list-group-item">penulis</li>
+                //                                 <li class="list-group-item">sinopsis Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolor praesentium esse assumenda numquam voluptates atque cumque ullam doloremque quisquam, nesciunt quos eaque? Quas illum repellat soluta. Ipsa, est qui?</li>
+                //                             </ul>
+                //                             </div>
+                //                         </div>
+                //                     </div>`
 //              })
 
 //         })
