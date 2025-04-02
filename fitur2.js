@@ -35,3 +35,13 @@ function showMovies(movie) {
                 </div>
             </div>`
 }
+
+
+//tombol detail
+// disini kita akan menggunakn event binding
+document.addEventListener('click', function(e) {
+    if(e.target.classList.contains('modal-detail-button')) {
+        const imdbid = e.target.dataset.imdbid
+        console.log(imdbid)
+    }
+})
