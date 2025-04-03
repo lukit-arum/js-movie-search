@@ -39,9 +39,43 @@ function showMovies(movie) {
 
 //tombol detail
 // disini kita akan menggunakn event binding
-document.addEventListener('click', function(e) {
+document.addEventListener('click', async function(e) {
     if(e.target.classList.contains('modal-detail-button')) {
         const imdbid = e.target.dataset.imdbid
-        console.log(imdbid)
+        const detail = await getDetail(imdbid)
+        console.log(detail)
+        updateUiDetail(detail)
     }
 })
+
+function getDetail(imdbid) {
+    return fetch('http://www.omdbapi.com/?apikey=ac003c55&i=' + imdbid)
+     .then(response => response.json())
+     .then(response => response)
+}
+
+function updateUiDetail(movieDetail) {
+    const modal = showDetail(movieDetail)
+    const modalBody = document.querySelector('.modal-body')
+    modalBody.innerHTML = modal
+}
+
+function showDetail(movieDetail) {
+    return `<div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                    <img src="${movieDetail.Poster}" class="img-fluid">
+                    </div>
+
+                    <div class="col-md">
+                    <ul class="list-group">
+                        <li class="list-group-item">judul</li>
+                        <li class="list-group-item">tahun</li>
+                        <li class="list-group-item">sutradara</li>
+                        <li class="list-group-item">penulis</li>
+                        <li class="list-group-item">sinopsis Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolor praesentium esse assumenda numquam voluptates atque cumque ullam doloremque quisquam, nesciunt quos eaque? Quas illum repellat soluta. Ipsa, est qui?</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>`
+}
