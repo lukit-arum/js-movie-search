@@ -1,16 +1,33 @@
 //tombol search
 const searchButton = document.querySelector('.search-button')
 searchButton.addEventListener('click', async function() {
-    const keyword = document.querySelector('.input-keyword')
-    const movies = await getMovies(keyword.value)
-    updateUi(movies)
+    try{
+        const keyword = document.querySelector('.input-keyword')
+        const movies = await getMovies(keyword.value)
+        updateUi(movies)
+    } catch(err) {
+        alert(err)
+    }
 })
 
 //request api
 function getMovies(keyword) {
     return fetch('http://www.omdbapi.com/?apikey=ac003c55&s=' + keyword)
-     .then(response => response.json())
-     .then(response => response.Search)
+     .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText)
+        }
+
+        return response.json()
+     })
+     .then(response => {
+        if(response.Response == "False") {
+            throw new Error(response.Error)
+        }
+
+        return response.Search
+        // console.log(response)
+     })
 }
 
 //ui
